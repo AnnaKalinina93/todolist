@@ -1,17 +1,36 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
-import reportWebVitals from './reportWebVitals';
+import App from './components/app/App';
+import { createAPI } from './services/api';
+import { Provider } from 'react-redux';
+import { reducer } from './store/reducer';
+import { fetchDataAction } from './store/api-action';
+import { redirect } from './store/middlewares/redirect';
+import { configureStore } from '@reduxjs/toolkit';
+import browserHistory from './browser-history';
+import { Router as BrowserRouter } from 'react-router-dom';
+
+const api = createAPI();
+
+const store = configureStore({
+  reducer: reducer,
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware({
+      thunk: {
+        extraArgument: api,
+      },
+    }).concat(redirect),
+});
+
+store.dispatch(fetchDataAction());
 
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <Provider store={store}>
+      <BrowserRouter history={browserHistory}>
+        <App />
+      </BrowserRouter>
+    </Provider>
   </React.StrictMode>,
   document.getElementById('root')
 );
-
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
-reportWebVitals();
