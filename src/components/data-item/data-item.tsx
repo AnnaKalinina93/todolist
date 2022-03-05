@@ -1,4 +1,4 @@
-import { ChangeEvent, useEffect, useState } from 'react';
+import { ChangeEvent, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { dataChange, dataRemoval } from '../../store/action';
 import { Data } from '../../types/data';

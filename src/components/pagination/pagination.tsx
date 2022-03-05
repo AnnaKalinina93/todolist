@@ -1,3 +1,5 @@
+
+/* eslint-disable jsx-a11y/anchor-is-valid */
 import { useDispatch, useSelector } from "react-redux";
 import { activePageChange } from "../../store/action";
 import { getActivePage } from "../../store/selectors";
